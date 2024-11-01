@@ -31,7 +31,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.chat_id not in chat_ids['chat_ids']:
         chat_ids['chat_ids'].append(update.message.chat_id)
     save_chat_ids()  # Save updated chat_ids
-    await update.message.reply_text(f"Hello! I am {BOT_USERNAME}. I am here to help you with your internship application process.")
+    await update.message.reply_text(f"Hello! I will send you updates about internships for freshmen.")
 
 async def send_response(message: str, chat_ids_list: list):
     bot = Bot(token=TOKEN)

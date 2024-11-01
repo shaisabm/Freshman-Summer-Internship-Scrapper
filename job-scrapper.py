@@ -25,7 +25,8 @@ def main():
         try:
             title = list(job.find_all('td'))[1].text
             print(title)
-            if title == last_visited:
+            print(title == last_visited)
+            if str(title).strip() == str(last_visited).strip():
                 first_row = job_rows[0]
                 data['last_visited'] = first_row.find_all('td')[1].text
                 with open('data.json', 'w') as file:
@@ -43,7 +44,6 @@ def main():
                 print("Sending the job to telegram...")
                 send_update(f"Title: {title}\nLink: {job_link}")
                 print("Job sent!")
-
 
         except Exception as e:
             print(f"Error: {e}")

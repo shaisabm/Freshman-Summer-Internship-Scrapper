@@ -42,10 +42,10 @@ def main():
             response = gemini(job_description)
             job_info = json.loads(response[7:len(response)-5])
             print(job_info)
-            # if job_info['hiring_freshman'] and job_info['posted_days_ago'] <= 15:
-            #     print("Sending the job to telegram...")
-            #     send_update(f"Title: {title}\nLink: {job_link}")
-            #     print("Job sent!")
+            if job_info['hiring_freshman'] and job_info['posted_days_ago'] <= 15:
+                print("Sending the job to telegram...")
+                send_update(f"Title: {title}\nLink: {job_link}")
+                print("Job sent!")
 
         except Exception as e:
             print(f"Error: {e}")

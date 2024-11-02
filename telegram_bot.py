@@ -41,5 +41,5 @@ async def send_response(message: str, chat_ids_list: list):
 if __name__ == '__main__':
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler('start', start_command))
-
+    print("Bot is running!")
     app.run_polling(poll_interval=3)

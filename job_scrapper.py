@@ -23,12 +23,14 @@ def main():
     print("Starting the job scrapper...")
     for job in job_rows:
         try:
-            title = list(job.find_all('td'))[1].text
-            print(title)
-            print(title == last_visited)
-            if str(title).strip() == str(last_visited).strip():
+            title = str(list(job.find_all('td'))[1].text).encode('ascii','ignore').decode('ascii')
+            title = title.strip()
+            print(f"Title: {title}\nLast Visited: {last_visited}")
+            print("Matched? : " + title == last_visited)
+            if title == last_visited:
                 first_row = job_rows[0]
-                data['last_visited'] = first_row.find_all('td')[1].text
+                first_row = str(first_row.find_all('td')[1].text.encode('ascii','ignore').decode('ascii'))
+                data['last_visited'] = first_row.strip()
                 with open('data.json', 'w') as file:
                     json.dump(data, file, indent=4)
                 break
@@ -40,10 +42,10 @@ def main():
             response = gemini(job_description)
             job_info = json.loads(response[7:len(response)-5])
             print(job_info)
-            if job_info['hiring_freshman'] and job_info['posted_days_ago'] <= 15:
-                print("Sending the job to telegram...")
-                send_update(f"Title: {title}\nLink: {job_link}")
-                print("Job sent!")
+            # if job_info['hiring_freshman'] and job_info['posted_days_ago'] <= 15:
+            #     print("Sending the job to telegram...")
+            #     send_update(f"Title: {title}\nLink: {job_link}")
+            #     print("Job sent!")
 
         except Exception as e:
             print(f"Error: {e}")
